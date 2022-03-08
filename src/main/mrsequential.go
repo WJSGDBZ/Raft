@@ -6,8 +6,8 @@ package main
 // go run mrsequential.go wc.so pg*.txt
 //
 
-import "fmt"
 import "6.824/mr"
+import "fmt"
 import "plugin"
 import "os"
 import "log"
@@ -24,7 +24,7 @@ func (a ByKey) Less(i, j int) bool { return a[i].Key < a[j].Key }
 
 func main() {
 	if len(os.Args) < 3 {
-		fmt.Fprintf(os.Stderr, "Usage: mrsequential xxx.so inputfiles...\n")
+		fmt.Fprintf(os.Stderr, "Usage: mrsequential wc.so inputfiles...\n")
 		os.Exit(1)
 	}
 
@@ -57,10 +57,9 @@ func main() {
 	//
 
 	sort.Sort(ByKey(intermediate))
-
+	//fmt.Printf("%v", intermediate)
 	oname := "mr-out-0"
 	ofile, _ := os.Create(oname)
-
 	//
 	// call Reduce on each distinct key in intermediate[],
 	// and print the result to mr-out-0.
@@ -75,6 +74,7 @@ func main() {
 		for k := i; k < j; k++ {
 			values = append(values, intermediate[k].Value)
 		}
+		//fmt.Printf("%v\n", values)
 		output := reducef(intermediate[i].Key, values)
 
 		// this is the correct format for each line of Reduce output.
@@ -93,7 +93,7 @@ func main() {
 func loadPlugin(filename string) (func(string, string) []mr.KeyValue, func(string, []string) string) {
 	p, err := plugin.Open(filename)
 	if err != nil {
-		log.Fatalf("cannot load plugin %v", filename)
+		log.Fatalf("cannot load plugin %v, %v", filename, err)
 	}
 	xmapf, err := p.Lookup("Map")
 	if err != nil {

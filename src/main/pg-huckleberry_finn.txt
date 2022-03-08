@@ -178,7 +178,7 @@ They Tip-toed Along
 
 Jim
 
-Tom Sawyer's Band of Robbers  
+Tom Sawyer's Band of Robbers
 
 Huck Creeps into his Window
 
@@ -214,7 +214,7 @@ They Tip-toed Along
 
 Jim
 
-Tom Sawyer's Band of Robbers  
+Tom Sawyer's Band of Robbers
 
 Huck Creeps into his Window
 
@@ -330,7 +330,7 @@ Climbing up the Bank
 
 "It made Her look Spidery"
 
-"They got him out and emptied Him"  
+"They got him out and emptied Him"
 
 The House
 
@@ -12358,4 +12358,3 @@ This Web site includes information about Project Gutenberg-tm, including
 how to make donations to the Project Gutenberg Literary Archive
 Foundation, how to help produce our new eBooks, and how to subscribe to
 our email newsletter to hear about new eBooks.
-
