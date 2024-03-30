@@ -1,12 +1,9 @@
 package shardkv
 
-
-import "6.824/labrpc"
-import "6.824/raft"
+import "mit6.824/labrpc"
+import "mit6.824/raft"
 import "sync"
-import "6.824/labgob"
-
-
+import "mit6.824/labgob"
 
 type Op struct {
 	// Your definitions here.
@@ -27,7 +24,6 @@ type ShardKV struct {
 	// Your definitions here.
 }
 
-
 func (kv *ShardKV) Get(args *GetArgs, reply *GetReply) {
 	// Your code here.
 }
@@ -36,7 +32,7 @@ func (kv *ShardKV) PutAppend(args *PutAppendArgs, reply *PutAppendReply) {
 	// Your code here.
 }
 
-//
+// Kill
 // the tester calls Kill() when a ShardKV instance won't
 // be needed again. you are not required to do anything
 // in Kill(), but it might be convenient to (for example)
@@ -47,8 +43,7 @@ func (kv *ShardKV) Kill() {
 	// Your code here, if desired.
 }
 
-
-//
+// StartServer
 // servers[] contains the ports of the servers in this group.
 //
 // me is the index of the current server in servers[].
@@ -95,7 +90,6 @@ func StartServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persister,
 
 	kv.applyCh = make(chan raft.ApplyMsg)
 	kv.rf = raft.Make(servers, me, persister, kv.applyCh)
-
 
 	return kv
 }

@@ -18,12 +18,12 @@ const (
 
 type Err string
 
-// Put or Append
+// PutL or AppendL
 type PutAppendArgs struct {
 	// You'll have to add definitions here.
 	Key   string
 	Value string
-	Op    string // "Put" or "Append"
+	Op    string // "PutL" or "AppendL"
 	// You'll have to add definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.

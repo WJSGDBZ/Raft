@@ -41,7 +41,7 @@ type Model struct {
 	// you can use the `ShallowEqual` function implemented below.
 	Equal func(state1, state2 interface{}) bool
 	// For visualization, describe an operation as a string.
-	// For example, "Get('x') -> 'y'".
+	// For example, "GetL('x') -> 'y'".
 	DescribeOperation func(input interface{}, output interface{}) string
 	// For visualization purposes, describe a state as a string.
 	// For example, "{'x' -> 'y', 'z' -> 'w'}"

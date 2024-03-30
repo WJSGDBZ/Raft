@@ -8,8 +8,8 @@ package raft
 // test with the original before submitting.
 //
 
-import "6.824/labgob"
-import "6.824/labrpc"
+import "mit6.824/labgob"
+import "mit6.824/labrpc"
 import "bytes"
 import "log"
 import "sync"
@@ -48,7 +48,7 @@ type config struct {
 	connected   []bool   // whether each server is on the net
 	saved       []*Persister
 	endnames    [][]string            // the port file names each sends to
-	logs        []map[int]interface{} // copy of each server's committed entries
+	logs        []map[int]interface{} // copy of each server's committed Entries
 	lastApplied []int
 	start       time.Time // time at which make_config() was called
 	// begin()/end() statistics
@@ -130,10 +130,10 @@ func (cfg *config) crash1(i int) {
 	}
 
 	if cfg.saved[i] != nil {
-		raftlog := cfg.saved[i].ReadRaftState()
+		raftvar, raftlog := cfg.saved[i].ReadRaftState()
 		snapshot := cfg.saved[i].ReadSnapshot()
 		cfg.saved[i] = &Persister{}
-		cfg.saved[i].SaveStateAndSnapshot(raftlog, snapshot)
+		cfg.saved[i].SaveStateAndSnapshot(raftvar, raftlog, snapshot)
 	}
 }
 

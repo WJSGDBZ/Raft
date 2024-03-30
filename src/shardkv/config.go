@@ -1,7 +1,7 @@
 package shardkv
 
-import "6.824/shardctrler"
-import "6.824/labrpc"
+import "mit6.824/shardctrler"
+import "mit6.824/labrpc"
 import "testing"
 import "os"
 
@@ -12,7 +12,7 @@ import "math/rand"
 import "encoding/base64"
 import "sync"
 import "runtime"
-import "6.824/raft"
+import "mit6.824/raft"
 import "strconv"
 import "fmt"
 import "time"
@@ -173,7 +173,7 @@ func (cfg *config) ShutdownServer(gi int, i int) {
 	// it's important to do this before creating
 	// the new Persister in saved[i], to avoid
 	// the possibility of the server returning a
-	// positive reply to an Append but persisting
+	// positive reply to an AppendL but persisting
 	// the result in the superseded Persister.
 	cfg.net.DeleteServer(cfg.servername(gg.gid, i))
 

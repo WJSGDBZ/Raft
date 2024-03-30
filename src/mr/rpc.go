@@ -6,7 +6,9 @@ package mr
 // remember to capitalize all names.
 //
 
-import "os"
+import (
+	"os"
+)
 import "strconv"
 
 //
@@ -23,7 +25,28 @@ type ExampleReply struct {
 }
 
 // Add your RPC definitions here.
+type TaskType int
 
+const (
+	Ready  TaskType = 0
+	Map    TaskType = 1
+	Reduce TaskType = 2
+	Done   TaskType = 3
+)
+
+type WorkerReply struct {
+	Method   TaskType
+	Filename string
+	NReduce  int
+	MapId    int
+	ReduceId int
+	WorkerId int
+}
+
+type ReadyArg struct {
+	Method TaskType
+	Id     int
+}
 
 // Cook up a unique-ish UNIX-domain socket name
 // in /var/tmp, for the coordinator.

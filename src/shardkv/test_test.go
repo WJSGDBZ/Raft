@@ -1,7 +1,7 @@
 package shardkv
 
-import "6.824/porcupine"
-import "6.824/models"
+import "mit6.824/porcupine"
+import "mit6.824/models"
 import "testing"
 import "strconv"
 import "time"
@@ -16,7 +16,7 @@ const linearizabilityCheckTimeout = 1 * time.Second
 func check(t *testing.T, ck *Clerk, key string, value string) {
 	v := ck.Get(key)
 	if v != value {
-		t.Fatalf("Get(%v): expected:\n%v\nreceived:\n%v", key, value, v)
+		t.Fatalf("GetL(%v): expected:\n%v\nreceived:\n%v", key, value, v)
 	}
 }
 
@@ -48,7 +48,7 @@ func TestStaticShards(t *testing.T) {
 
 	// make sure that the data really is sharded by
 	// shutting down one shard and checking that some
-	// Get()s don't succeed.
+	// GetL()s don't succeed.
 	cfg.ShutdownGroup(1)
 	cfg.checklogs() // forbid snapshots
 
@@ -58,7 +58,7 @@ func TestStaticShards(t *testing.T) {
 		go func(i int) {
 			v := ck1.Get(ka[i])
 			if v != va[i] {
-				ch <- fmt.Sprintf("Get(%v): expected:\n%v\nreceived:\n%v", ka[i], va[i], v)
+				ch <- fmt.Sprintf("GetL(%v): expected:\n%v\nreceived:\n%v", ka[i], va[i], v)
 			} else {
 				ch <- ""
 			}

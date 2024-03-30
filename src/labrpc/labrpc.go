@@ -49,7 +49,9 @@ package labrpc
 //   pass svc to srv.AddService()
 //
 
-import "6.824/labgob"
+import (
+	"mit6.824/labgob"
+)
 import "bytes"
 import "reflect"
 import "sync"
@@ -109,16 +111,18 @@ func (e *ClientEnd) Call(svcMeth string, args interface{}, reply interface{}) bo
 	//
 	// wait for the reply.
 	//
-	rep := <-req.replyCh
-	if rep.ok {
-		rb := bytes.NewBuffer(rep.reply)
-		rd := labgob.NewDecoder(rb)
-		if err := rd.Decode(reply); err != nil {
-			log.Fatalf("ClientEnd.Call(): decode reply: %v\n", err)
+	select {
+	case rep := <-req.replyCh:
+		if rep.ok {
+			rb := bytes.NewBuffer(rep.reply)
+			rd := labgob.NewDecoder(rb)
+			if err := rd.Decode(reply); err != nil {
+				log.Fatalf("ClientEnd.Call(): decode reply: %v\n", err)
+			}
+			return true
+		} else {
+			return false
 		}
-		return true
-	} else {
-		return false
 	}
 }
 
@@ -264,7 +268,7 @@ func (rn *Network) processReq(req reqMsg) {
 		// do not reply if DeleteServer() has been called, i.e.
 		// the server has been killed. this is needed to avoid
 		// situation in which a client gets a positive reply
-		// to an Append, but the server persisted the update
+		// to an AppendL, but the server persisted the update
 		// into the old Persister. config.go is careful to call
 		// DeleteServer() before superseding the Persister.
 		serverDead = rn.isServerDead(req.endname, servername, server)
