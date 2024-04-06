@@ -5,6 +5,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+	"log"
 )
 import "crypto/rand"
 import "math/big"
@@ -88,6 +89,7 @@ func (ck *Clerk) Get(key string) string {
 				return ""
 			case ErrWrongLeader:
 				time.Sleep(10 * time.Millisecond)
+			case ErrTimeOut:
 			default:
 				panic("UNEXPECT ERR :" + reply.Err)
 			}
@@ -149,6 +151,7 @@ func (ck *Clerk) PutAppend(key string, value []byte, op string) {
 			case ErrWrongLeader:
 				DPrintf("ErrWrongLeader")
 				time.Sleep(10 * time.Millisecond)
+			case ErrTimeOut:
 			default:
 				panic("UNEXPECT ERR :" + reply.Err)
 			}

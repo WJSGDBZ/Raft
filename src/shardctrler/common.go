@@ -17,14 +17,23 @@ package shardctrler
 // You will need to add fields to the RPC argument structs.
 //
 
+
+type HashNode struct {
+	Hash int
+	GID  int
+}
+
+type HashRing []HashNode
+
 // The number of shards.
-const NShards = 10
+const NShards = 128
 
 // A configuration -- an assignment of shards to groups.
 // Please don't change this.
 type Config struct {
 	Num    int              // config number
 	Shards [NShards]int     // shard -> gid
+	HashRing HashRing        // shard -> gid
 	Groups map[int][]string // gid -> servers[]
 }
 
@@ -33,6 +42,14 @@ const (
 )
 
 type Err string
+
+type CommandRequest struct {
+    Op
+    JoinArgs
+    LeaveArgs
+    MoveArgs
+    QueryArgs
+}
 
 type JoinArgs struct {
 	Servers map[int][]string // new GID -> servers mappings

@@ -4,14 +4,26 @@ package shardctrler
 // Shardctrler clerk.
 //
 
-import "6.824/labrpc"
+import "mit6.824/labrpc"
 import "time"
 import "crypto/rand"
 import "math/big"
+import 	"sync"
 
 type Clerk struct {
 	servers []*labrpc.ClientEnd
 	// Your data here.
+	TaskId   map[int]int
+	CID      int64
+	mu       sync.Mutex
+}
+
+func (ck *Clerk) getTaskId(op int) int {
+	ck.mu.Lock()
+	defer ck.mu.Unlock()
+
+	ck.TaskId[op]++
+	return ck.TaskId[op]
 }
 
 func nrand() int64 {
@@ -25,6 +37,8 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 	ck := new(Clerk)
 	ck.servers = servers
 	// Your code here.
+	ck.TaskId = make(map[int]int)
+	ck.CID = nrand()
 	return ck
 }
 

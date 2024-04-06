@@ -57,6 +57,7 @@ func (kv *KVServer) Get(args *GetArgs, reply *GetReply) {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
+	reply.Err = OK
 	if kv.rf.ReadOnly(kv.commitIndex) { // Do not need to replicate
 		reply.Value = kv.stateMachine.GetReplicaL(args.Key)
 		if reply.Value == nil {
@@ -65,7 +66,6 @@ func (kv *KVServer) Get(args *GetArgs, reply *GetReply) {
 		return
 	}
 
-	reply.Err = OK
 	tid := fmt.Sprintf("%d_%d_%d", args.CID, GET, args.TaskId)
 	op := Op{
 		TID:    tid,
