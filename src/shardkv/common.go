@@ -18,6 +18,18 @@ const (
 
 type Err string
 
+type PullDataRequest struct {
+    ConfNum  int
+    ShardIds []int
+}
+
+type PullDataResponse struct {
+    Err     Err
+    ConfNum int
+    Shards  map[int]*Shard
+}
+
+
 // PutL or AppendL
 type PutAppendArgs struct {
 	// You'll have to add definitions here.

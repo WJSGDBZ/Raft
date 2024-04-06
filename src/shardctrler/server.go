@@ -1,11 +1,10 @@
 package shardctrler
 
-
-import "mit6.824/raft"
-import "mit6.824/labrpc"
-import "sync"
-import "mit6.824/labgob"
 import (
+	"mit6.824/raft"
+	"sync"
+	"mit6.824/labrpc"
+	"mit6.824/labgob"
     "crypto/sha256"
     "encoding/binary"
     "sort"
@@ -148,7 +147,9 @@ func (sc *ShardCtrler) Move(args *MoveArgs, reply *MoveReply) {
 // 	Config      Config
 // }
 func (sc *ShardCtrler) Query(args *QueryArgs, reply *QueryReply) {
-	// Your code here.
+	sc.mu.Lock()
+    defer sc.mu.Unlock()
+
 	length := len(sc.configs)
     config := Config{}
     if args.Num == -1 || args.Num >= length {
